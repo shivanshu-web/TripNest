@@ -16,6 +16,9 @@
         <li><%=listing.location%></li>
         <li><%=listing.country%></li>
     </ul>
+    <form method="get" action="http://localhost:8080/listings/<%= listing.id %>/update">
+        <button>Edit</button>
+    </form>
     
 </body>
 </html>

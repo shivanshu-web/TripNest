@@ -65,6 +65,15 @@ app.post("/listings", async(req,res)=>{
 
 });
 
+//update route
+
+app.get("/listings/:id/update", async(req,res)=>{
+ let {id} = req.params;
+ let listing = await Listing.findById(id);
+ 
+ res.render("listings/update.ejs",{listing});
+});
+
 
 
 
