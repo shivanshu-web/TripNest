@@ -7,7 +7,7 @@
 </head>
 <body>
     <h3>Edit Details</h3>
-    <form action="">
+    <form method="post" action="http://localhost:8080/listings/<%=listing.id%>?_method=PUT">
  Title: <input name="listing[title]" value="<%=listing.title%>">
  <br><br>
  Description:<textarea name="listing[description]" id=""><%=listing.description%></textarea>
