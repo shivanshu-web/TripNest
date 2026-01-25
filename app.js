@@ -89,10 +89,22 @@ res.redirect(`/listings/${id}`);
 });
 
 
+// delete route
+
+app.delete("/listings/:id", async(req,res)=>{
+let {id} = req.params;
+
+await Listing.findByIdAndDelete(id);
+res.redirect("/listings");
+});
 
 
 
-// app.get("/listing",(req,res)=>{
+
+
+
+
+//app.get("/listing",(req,res)=>{
 //   let sampleL = new Listing({
 //     title:"my house",
 //     description:"it is too beatiful ",
@@ -101,8 +113,7 @@ res.redirect(`/listings/${id}`);
 //     country:"India",
 
 //   });
-
-//   sampleL.save().then((res)=>{
+// sampleL.save().then((res)=>{
 //     console.log(res);
 //     console.log("save it ");
 //   }).catch((err)=>{
