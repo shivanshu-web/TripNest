@@ -1,15 +1,25 @@
- <% layout("/layouts/boilerplate.ejs") %>
-<body>
+<% layout("/layouts/boilerplate.ejs") %>
+
+  <body>
     <h3>all Listings </h3>
     <!-- <form method="get" action="http://localhost:8080/listings/new">
       <button>Create New Route</button>
     </form> -->
 
-      <ul>
-        <% for(let list of allListings){ %>
-         <li><a href="/listings/<%= list.id %> "> <%= list.title %></a></li>
-         <li><a href="/listings/<%= list.id %> "> <%= list.title %></a></li>
-        
-       <% }%>
-    </ul>
-</body>
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+       <% for(let list of allListings){ %>
+    <div class="card   " >
+      <img src="<%= list.image %>" class="card-img-top" alt="listing.image" style="height:20rem;">
+      <div class="card-body">
+      <p class="card-para">
+        <b> <%= list.title %></b>             <br>
+        &#8377;<%=list.price.toLocaleString("en-IN") %>/night
+      </p>
+      </div>
+    </div>
+    <% }%>
+      </div>
+     
+
+    
+  </body>
