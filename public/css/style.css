@@ -84,3 +84,25 @@ body{
 }
 
 
+/* for index page  */
+
+.list-link{
+    text-decoration:none;
+    color: #222222;
+}
+
+
+/* card img */
+
+.card-img-overlay{
+    opacity:0;
+
+}
+
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: white;
+
+}
+
+
