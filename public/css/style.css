@@ -2,7 +2,13 @@ body{
 
     
  font-family: "Plus Jakarta Sans", sans-serif !important;
-    
+display: flex;
+flex-direction:column;
+min-height: 100vh;
+}
+
+.contener{
+    flex:1;
 }
 
 /* navbar */
@@ -103,6 +109,32 @@ body{
     opacity:0.2;
     background-color: white;
 
+}
+
+
+/* new.ejs */
+
+.add-btn{
+    border:none !important;
+    background-color: #fe424d !important;
+}
+
+/* update.ejs */
+
+.btn-update{
+    border:none !important;
+    background-color: #fe424d !important;
+}
+
+/* show.ejs */
+
+.show-img{
+    height:30vh;
+   
+}
+
+.btn-show{
+    display:flex;
 }
 
 
