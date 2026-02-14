@@ -53,7 +53,7 @@ const listingSchema = new Schema({
         ? "https://plus.unsplash.com/premium_photo-1670275658563-450157cc6e34?q=80&w=688&auto=format&fit=crop"
         : v,
   },
-
+ 
   price: Number,
   location: String,
   country: String,
