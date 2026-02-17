@@ -6,7 +6,7 @@ const methodOverride = require("method-override");
 
 const Listing = require("./models/listing.js");
 const ejsMate = require("ejs-mate");
-
+   
 
 
 
@@ -15,7 +15,7 @@ async function main() {
 
      await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
-
+   
 main().then(()=>{    
     console.log("connection successfully");
 }).catch(()=>{
