@@ -11,7 +11,7 @@ const ejsMate = require("ejs-mate");
 
 
  
-async function main() {   
+async function main() {    
 
      await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
@@ -19,7 +19,7 @@ async function main() {
 main().then(()=>{    
     console.log("connection successfully");
 }).catch(()=>{
-    console.log("err");
+    console.log("err"); 
 
 
 });
