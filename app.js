@@ -85,7 +85,7 @@ app.get("/listings/:id/update", async(req,res)=>{
 
 app.put("/listings/:id",async(req,res) => {
 let {id} = req.params;
-let Ulisting = req.body.listing;
+let Ulisting = req.body.listing; 
 
  await Listing.findByIdAndUpdate(id,{ ...Ulisting });
 
