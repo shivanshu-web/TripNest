@@ -43,7 +43,7 @@ app.get("/listings",async(req,res)=>{
  res.render("listings/index.ejs",{allListings});
 }); 
 
-app.get("/listings/new",(req,res)=>{
+app.get("/listings/new",(req,res)=>{  
 
 res.render("listings/new.ejs");  
 });
