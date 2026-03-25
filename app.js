@@ -71,7 +71,7 @@ app.post("/listings", async(req,res)=>{
     res.redirect("listings");
 
 });
-
+ 
 //EDIT route
 
 app.get("/listings/:id/update", async(req,res)=>{
