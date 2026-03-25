@@ -90,7 +90,7 @@ let Ulisting = req.body.listing;
  await Listing.findByIdAndUpdate(id,{ ...Ulisting });
 
 res.redirect(`/listings/${id}`);
-});
+}); 
 
 
 // delete route
