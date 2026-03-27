@@ -89,7 +89,7 @@ let Ulisting = req.body.listing;
 
  await Listing.findByIdAndUpdate(id,{ ...Ulisting });
 
-res.redir ect(`/listings/${id}`);
+res.redirect(`/listings/${id}`);
 });  
 
 
