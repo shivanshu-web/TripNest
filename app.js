@@ -6,6 +6,7 @@ const methodOverride = require("method-override");
 
 const Listing = require("./models/listing.js");
 const ejsMate = require("ejs-mate");
+const asyncWrap = require("./util/wrapAsyanc.js")
    
 
 
@@ -62,15 +63,16 @@ app.get("/listings/:id", async(req,res)=>{
 
 // new route 
 
-app.post("/listings", async(req,res)=>{
+app.post("/listings", asyncWrap(async(req,res,next)=>{
 
    
     let newlisting = await new Listing(req.body.listing);
     await newlisting.save();
 
     res.redirect("listings");
+   
 
-});
+}));
  
 //EDIT route
 
@@ -125,6 +127,13 @@ res.redirect("/listings");
 //   })
 
 // });
+
+// Error handling route
+
+app.use((err,req,res,next)=>{
+    res.send("something went wrong");
+
+});
 
 
 app.listen(8080,()=>{
