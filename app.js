@@ -128,7 +128,7 @@ res.redirect("/listings");
 
 // });
 
-// Error handling route
+// Error handling route 
 
 app.use((err,req,res,next)=>{
     res.send("something went wrong");
