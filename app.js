@@ -130,7 +130,7 @@ res.redirect("/listings");
 
 // Error handling route 
 
-app.use((err,req,res,next)=>{
+app.use((err,req,res,next)=>{ 
     res.send("something went wrong");
 
 });
