@@ -126,7 +126,7 @@ res.redirect("/listings");
 //     console.log(err);
 //   })
 
-// });
+// }); 
 
 // Error handling route 
 
