@@ -70,7 +70,7 @@ app.post("/listings", asyncWrap(async(req,res,next)=>{
     if (!req.body || !req.body.listing){
     throw new ExpressError(400,"send valid data");
 }
-
+ 
    
     let newlisting = await new Listing(req.body.listing);
     await newlisting.save();
