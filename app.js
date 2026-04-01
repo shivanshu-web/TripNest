@@ -29,6 +29,7 @@ main().then(()=>{
 
 app.set("view engine","ejs");
 app.set("views", path.join(__dirname,"views"));
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.engine("ejs",ejsMate);
@@ -63,7 +64,7 @@ app.get("/listings/:id", asyncWrap(async(req,res)=>{
   res.render("listings/show.ejs",{listing});
 }));
 
-// new route 
+// new route  
 
 app.post("/listings", asyncWrap(async(req,res,next)=>{
     // short circute evaluation  if data is empty
