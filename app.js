@@ -64,7 +64,7 @@ app.get("/listings/:id", asyncWrap(async(req,res)=>{
   res.render("listings/show.ejs",{listing});
 }));
 
-// new route  
+// new route   
 
 app.post("/listings", asyncWrap(async(req,res,next)=>{
     // short circute evaluation  if data is empty
