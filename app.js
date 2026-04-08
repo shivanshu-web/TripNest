@@ -89,7 +89,7 @@ app.get("/listings/:id/update", asyncWrap(async(req,res)=>{
  
  res.render("listings/update.ejs",{listing});
 }));
-
+ 
 // update route
  
 app.put("/listings/:id", asyncWrap(async(req,res) => {
