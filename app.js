@@ -8,6 +8,7 @@ const Listing = require("./models/listing.js");
 const ejsMate = require("ejs-mate");
 const asyncWrap = require("./util/wrapAsyanc.js");
 const ExpressError = require("./util/ExpressError");
+const { listingSchema } = require("./schema.js");
 
    
 
@@ -64,13 +65,19 @@ app.get("/listings/:id", asyncWrap(async(req,res)=>{
   res.render("listings/show.ejs",{listing});
 }));
 
-// new route   
+// create route   
 
 app.post("/listings", asyncWrap(async(req,res,next)=>{
     // short circute evaluation  if data is empty
-    if (!req.body || !req.body.listing){
-    throw new ExpressError(400,"send valid data");
-}
+//     if (!req.body || !req.body.listing){
+//     throw new ExpressError(400,"send valid data");
+// }
+    let result = listingSchema.validate(req.body);
+    // console.log(result);
+    if (result.error){
+        throw new ExpressError(400,result.error);
+    }
+   
  
    
     let newlisting = await new Listing(req.body.listing);
