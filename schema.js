@@ -8,7 +8,7 @@
 //         price:joi.number().required().min(0),
 //         image: joi.string().allow("",null)
 //     }).required()
-// })
+// }) 
 
 const Joi = require("joi");
 
