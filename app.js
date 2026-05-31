@@ -45,14 +45,14 @@ app.get("/",(req,res) =>{
 const validateListing = (req,res,next)=>{
     let {error} = listingSchema.validate(req.body);
     if(error){
-        throw new Express(400,error)
+        throw new ExpressError(400,error)
     }else{
         next()
     }
 }
 
-// listing route 
-app.get("/listings",validateListing, asyncWrap(async(req,res)=>{
+// listing route  , get method no have body so we can not use validatelisting;
+app.get("/listings",/*validateListing,*/ asyncWrap(async(req,res)=>{
  const allListings =  await Listing.find({});
  
  res.render("listings/index.ejs",{allListings});
@@ -100,7 +100,7 @@ app.post("/listings", validateListing, asyncWrap(async(req,res,next)=>{
  
 //EDIT route
 
-app.get("/listings/:id/update",validateListing, asyncWrap(async(req,res)=>{
+app.get("/listings/:id/update",/*validateListing, */ asyncWrap(async(req,res)=>{
  let {id} = req.params;
  let listing = await Listing.findById(id);
  
