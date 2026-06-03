@@ -57,6 +57,12 @@ const listingSchema = new Schema({
   price: Number,
   location: String,
   country: String, 
+  reviews:[
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"review",
+    },
+  ]
 });
 
 module.exports = mongoose.model("Listing", listingSchema);
