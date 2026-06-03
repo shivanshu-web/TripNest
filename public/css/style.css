@@ -4,6 +4,8 @@ body{
  flex-direction: column;
  min-height: 100vh;
  overflow-x: hidden;
+ 
+
 }
 
 .contener{
@@ -134,6 +136,15 @@ body{
 
 .btn-show{
     display:flex;
+}
+
+/* .row{
+    padding:1rem;
+} */
+
+/* doing by myself; */
+.heading{
+    padding:1rem;
 }
 
 
