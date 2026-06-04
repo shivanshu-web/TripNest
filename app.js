@@ -9,6 +9,7 @@ const ejsMate = require("ejs-mate");
 const asyncWrap = require("./util/wrapAsyanc.js");
 const ExpressError = require("./util/ExpressError");
 const { listingSchema } = require("./schema.js");
+const {reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 
    
@@ -45,6 +46,16 @@ app.get("/",(req,res) =>{
 
 const validateListing = (req,res,next)=>{
     let {error} = listingSchema.validate(req.body);
+    if(error){
+        throw new ExpressError(400,error)
+    }else{
+        next()
+    }
+}
+
+// for review middleware to validate on serverside 
+const validateReview = (req,res,next)=>{
+    let {error} = reviewSchema.validate(req.body);
     if(error){
         throw new ExpressError(400,error)
     }else{
@@ -132,7 +143,7 @@ res.redirect("/listings");
 // Reviews post route ;
 
 
-app.post("/listings/:id/reviews", async(req,res)=>{
+app.post("/listings/:id/reviews",validateReview, asyncWrap( async(req,res)=>{
     let listing = await  Listing.findById(req.params.id);
    
     let newReview = new Review(req.body.review);
@@ -148,7 +159,7 @@ app.post("/listings/:id/reviews", async(req,res)=>{
 
 
 
-});
+}));
 
 
 
