@@ -8,8 +8,11 @@ const Listing = require("./models/listing.js");
 const ejsMate = require("ejs-mate");
 const asyncWrap = require("./util/wrapAsyanc.js");
 const ExpressError = require("./util/ExpressError");
+
+// for JOi validaiton 
 const { listingSchema } = require("./schema.js");
 const {reviewSchema} = require("./schema.js");
+// Review Schema 
 const Review = require("./models/review.js");
 
    
@@ -81,7 +84,7 @@ res.render("listings/new.ejs");
 app.get("/listings/:id", asyncWrap(async(req,res)=>{
 
   let {id} = req.params;
-  const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate("reviews");
   
  
   res.render("listings/show.ejs",{listing});
@@ -131,7 +134,7 @@ res.redirect(`/listings/${id}`);
 }));  
 
 
-// delete route
+// delete listing route
 
 app.delete("/listings/:id", asyncWrap(async(req,res)=>{
 let {id} = req.params;
@@ -154,8 +157,15 @@ app.post("/listings/:id/reviews",validateReview, asyncWrap( async(req,res)=>{
     console.log("review saved ");
     res.redirect(`/listings/${listing.id}`) ;
 
-   
+}));
 
+// delete Review route 
+app.delete("/listings/:id/reviews/:review_id" , asyncWrap(async(req,res)=>{
+
+    let {id , review_id} = req.params;
+    await Review.findByIdAndDelete(review_id);
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:review_id}});
+    res.redirect(`/listings/${id}`);
 
 
 
