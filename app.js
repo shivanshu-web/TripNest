@@ -15,6 +15,10 @@ const {reviewSchema} = require("./schema.js");
 // Review Schema 
 const Review = require("./models/review.js");
 
+const listing = require("./routes/listing.js");
+const review = require("./routes/review.js");
+
+
    
  
 
@@ -47,151 +51,18 @@ app.get("/",(req,res) =>{
 });
 
 
-const validateListing = (req,res,next)=>{
-    let {error} = listingSchema.validate(req.body);
-    if(error){
-        throw new ExpressError(400,error)
-    }else{
-        next()
-    }
-}
-
-// for review middleware to validate on serverside 
-const validateReview = (req,res,next)=>{
-    let {error} = reviewSchema.validate(req.body);
-    if(error){
-        throw new ExpressError(400,error)
-    }else{
-        next()
-    }
-}
-
-// listing route  , get method no have body so we can not use validatelisting;
-app.get("/listings",/*validateListing,*/ asyncWrap(async(req,res)=>{
- const allListings =  await Listing.find({});
- 
- res.render("listings/index.ejs",{allListings});
-})); 
-
-app.get("/listings/new",(req,res)=>{  
-
-res.render("listings/new.ejs");   
-}); 
-
-
-// show route
-
-app.get("/listings/:id", asyncWrap(async(req,res)=>{
-
-  let {id} = req.params;
-  const listing = await Listing.findById(id).populate("reviews");
-  
- 
-  res.render("listings/show.ejs",{listing});
-}));
-
-// create route   
-
-app.post("/listings", validateListing, asyncWrap(async(req,res,next)=>{
-    // short circute evaluation  if data is empty
-//     if (!req.body || !req.body.listing){
-//     throw new ExpressError(400,"send valid data");
-// }
-    // let result = listingSchema.validate(req.body);
-    // // console.log(result);
-    // if (result.error){
-    //     throw new ExpressError(400,result.error);
-    // }
-   
- 
-   
-    let newlisting = await new Listing(req.body.listing);
-    await newlisting.save();
-
-    res.redirect("/listings");
-   
-
-}));
- 
-//EDIT route
-
-app.get("/listings/:id/update",/*validateListing, */ asyncWrap(async(req,res)=>{
- let {id} = req.params;
- let listing = await Listing.findById(id);
- 
- res.render("listings/update.ejs",{listing});
-}));
- 
-// update route
- 
-app.put("/listings/:id", asyncWrap(async(req,res) => {
-let {id} = req.params;
-let Ulisting = req.body.listing; 
-
- await Listing.findByIdAndUpdate(id,{ ...Ulisting });
-
-res.redirect(`/listings/${id}`); 
-}));  
-
-
-// delete listing route
-
-app.delete("/listings/:id", asyncWrap(async(req,res)=>{
-let {id} = req.params;
-
-await Listing.findByIdAndDelete(id);
-res.redirect("/listings");
-}));
-
-// Reviews post route ;
-
-
-app.post("/listings/:id/reviews",validateReview, asyncWrap( async(req,res)=>{
-    let listing = await  Listing.findById(req.params.id);
-   
-    let newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-
-    await newReview.save();
-    await listing.save();
-    console.log("review saved ");
-    res.redirect(`/listings/${listing.id}`) ;
-
-}));
-
-// delete Review route 
-app.delete("/listings/:id/reviews/:review_id" , asyncWrap(async(req,res)=>{
-
-    let {id , review_id} = req.params;
-    await Review.findByIdAndDelete(review_id);
-    await Listing.findByIdAndUpdate(id,{$pull:{reviews:review_id}});
-    res.redirect(`/listings/${id}`);
+app.use("/listings",listing);
+app.use("/listings/:id/reviews",review);
 
 
 
-}));
 
 
 
-//app.get("/listing",(req,res)=>{
-//   let sampleL = new Listing({
-//     title:"my house",
-//     description:"it is too beatiful ",
-//     price: 2000,
-//     location:"auraiya",
-//     country:"India",
 
-//   });
-// sampleL.save().then((res)=>{
-//     console.log(res);
-//     console.log("save it ");
-//   }).catch((err)=>{
-//     console.log(err);
-//   })
 
-// });
 
-// handel wrong path 
+
 
 app.all(/.*/,(req,res,next)=>{
     next(new ExpressError(404,"page not found"));
