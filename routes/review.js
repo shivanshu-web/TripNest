@@ -1,5 +1,7 @@
 const express = require("express");
-const router = express.Router();
+//const router = express.Router();
+const Listing = require("../models/listing.js");
+
 
 const asyncWrap = require("../util/wrapAsyanc.js");
 const ExpressError = require("../util/ExpressError");
@@ -7,6 +9,12 @@ const ExpressError = require("../util/ExpressError");
 // for JOi validaiton 
 const { listingSchema } = require("../schema.js");
 const {reviewSchema} = require("../schema.js");
+// Review Schema 
+const Review = require("../models/review.js");
+
+
+//When creating the router, enable parameter merging:
+const router = express.Router({ mergeParams: true });
 
 
 
@@ -29,7 +37,8 @@ const validateReview = (req,res,next)=>{
 
 
 router.post("/",validateReview, asyncWrap( async(req,res)=>{
-    let listing = await  Listing.findById(req.params.id);
+    
+    let listing = await  Listing.findById(req.params._id);
    
     let newReview = new Review(req.body.review);
     listing.reviews.push(newReview);

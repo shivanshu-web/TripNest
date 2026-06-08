@@ -52,7 +52,7 @@ app.get("/",(req,res) =>{
 
 
 app.use("/listings",listing);
-app.use("/listings/:id/reviews",review);
+app.use("/listings/:_id/reviews",review);
 
 
 

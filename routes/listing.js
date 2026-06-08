@@ -41,7 +41,7 @@ router.get("/:id", asyncWrap(async(req,res)=>{
   const listing = await Listing.findById(id).populate("reviews");
   
  
-  res.render("/show.ejs",{listing});
+  res.render("../views/listings/show.ejs",{listing});
 }));
 
 // create route   
