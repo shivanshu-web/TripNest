@@ -82,6 +82,10 @@ body{
     object-fit: cover !important;
 }
 
+.card-img-top:hover{
+    opacity:0.8;
+}
+
 .card-body{
     padding:0 !important;
 }
@@ -99,18 +103,7 @@ body{
 }
 
 
-/* card img */
 
-.card-img-overlay{
-    opacity:0;
-
-}
-
-.card-img-overlay:hover{
-    opacity:0.2;
-    background-color: white;
-
-}
 
 
 /* new.ejs */

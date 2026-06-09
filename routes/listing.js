@@ -50,6 +50,7 @@ router.post("/", validateListing, asyncWrap(async(req,res,next)=>{
    
     let newlisting = await new Listing(req.body.listing);
     await newlisting.save();
+    req.flash("success","New listing created");
 
     res.redirect("/listings");
 
@@ -69,6 +70,7 @@ router.get("/:id/update",/*validateListing, */ asyncWrap(async(req,res)=>{
 router.put("/:id", asyncWrap(async(req,res) => {
 let {id} = req.params;
 let Ulisting = req.body.listing; 
+req.flash("update","Listing Update successfully");
 
  await Listing.findByIdAndUpdate(id,{ ...Ulisting });
 
@@ -80,6 +82,7 @@ res.redirect(`/listings/${id}`);
 
 router.delete("/:id", asyncWrap(async(req,res)=>{
 let {id} = req.params;
+req.flash("delete","Listing Deleted successfully");
 
 await Listing.findByIdAndDelete(id);
 res.redirect("/listings");

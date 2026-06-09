@@ -18,6 +18,12 @@ const Review = require("./models/review.js");
 const listing = require("./routes/listing.js");
 const review = require("./routes/review.js");
 
+// for cookie work or session
+const session = require("express-session");
+
+// flash for pop up message
+const flash = require("connect-flash");
+
 
    
  
@@ -50,9 +56,30 @@ app.get("/",(req,res) =>{
     res.send("root");
 });
 
+const sessionOption = {
+    secret:"mysupersecretcode",
+    resave:false,
+    saveUninitialized: true,
+    cookie :{
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 *1000 ),
+        maxAge: 7*24*60 *60*1000,// keep this cookie for 7 days 
+        httpOnly:true // prevent from read cookie
+    }
+
+}
+app.use(session(sessionOption));
+app.use(flash());
+
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success");
+    res.locals.deleted = req.flash("delete");
+    res.locals.updated = req.flash("update");
+    next();
+
+});
 
 app.use("/listings",listing);
-app.use("/listings/:_id/reviews",review);
+app.use("/listings/:id/reviews",review);
 
 
 
