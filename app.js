@@ -24,6 +24,15 @@ const session = require("express-session");
 // flash for pop up message
 const flash = require("connect-flash");
 
+// for user passport 
+const passport = require("passport");
+// for local strategy (username , password);
+const localstrategy = require("passport-local");
+
+// user model 
+
+const User = require("/models/User.js");
+
 
    
  
@@ -69,6 +78,9 @@ const sessionOption = {
 }
 app.use(session(sessionOption));
 app.use(flash());
+// a middleware for passport
+app.use(passport.initialize());
+
 
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
