@@ -27,11 +27,11 @@ const flash = require("connect-flash");
 // for user passport 
 const passport = require("passport");
 // for local strategy (username , password);
-const localstrategy = require("passport-local");
+const Localstrategy = require("passport-local");
 
 // user model 
 
-const User = require("/models/User.js");
+const User = require("./models/User.js");
 
 
    
@@ -80,13 +80,35 @@ app.use(session(sessionOption));
 app.use(flash());
 // a middleware for passport
 app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
 
+//Store User ID in Session
+passport.serializeUser(User.serializeUser());
+
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.deleted = req.flash("delete");
     res.locals.updated = req.flash("update");
     next();
+
+});
+
+
+app.get("/demouser" , async(req,res)=>{
+    let fakeUser = new User({
+        email:"student@gmail.com",
+        username : "shivanshu"
+
+    });
+        
+   const registerUser =  await User.register(fakeUser,"helloji");
+   res.send(registerUser);
+
+    
+
 
 });
 
