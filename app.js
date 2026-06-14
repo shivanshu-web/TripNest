@@ -15,8 +15,9 @@ const {reviewSchema} = require("./schema.js");
 // Review Schema 
 const Review = require("./models/review.js");
 
-const listing = require("./routes/listing.js");
-const review = require("./routes/review.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 // for cookie work or session
 const session = require("express-session");
@@ -27,7 +28,7 @@ const flash = require("connect-flash");
 // for user passport 
 const passport = require("passport");
 // for local strategy (username , password);
-const Localstrategy = require("passport-local");
+const LocalStrategy = require("passport-local");
 
 // user model 
 
@@ -92,28 +93,31 @@ app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.deleted = req.flash("delete");
     res.locals.updated = req.flash("update");
+    res.locals.sinupE = req.flash("error");
+    res.locals.currUser = req.user;
+   
     next();
 
 });
 
 
-app.get("/demouser" , async(req,res)=>{
+app.get("/demouser", async (req, res) => {
     let fakeUser = new User({
-        email:"student@gmail.com",
-        username : "shivanshu"
-
+        email: "shica@gmail.com",
+        username: "shiva"
     });
-        
-   const registerUser =  await User.register(fakeUser,"helloji");
-   res.send(registerUser);
 
-    
+    let registeredUser = await User.register(fakeUser, "shiva");
 
-
+    res.send(registeredUser);
 });
 
-app.use("/listings",listing);
-app.use("/listings/:id/reviews",review);
+
+
+
+app.use("/listings",listingRouter);
+app.use("/listings/:id/reviews",reviewRouter);
+app.use("/",userRouter);
 
 
 

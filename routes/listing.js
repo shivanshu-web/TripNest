@@ -6,6 +6,7 @@ const asyncWrap = require("../util/wrapAsyanc.js");
 
 // for JOi validaiton 
 const { listingSchema } = require("../schema.js");
+const {isLoggedIn}  = require("../middleware.js");
 
 
 
@@ -25,10 +26,12 @@ router.get("/",/*validateListing,*/ asyncWrap(async(req,res)=>{
  const allListings =  await Listing.find({});
  
  res.render("listings/index.ejs",{allListings});
-})); 
+}));
 
-router.get("/new",(req,res)=>{  
+// new listing
 
+router.get("/new",isLoggedIn,(req,res)=>{ 
+        
 res.render("listings/new.ejs");   
 }); 
 
@@ -58,7 +61,7 @@ router.post("/", validateListing, asyncWrap(async(req,res,next)=>{
  
 //EDIT route
 
-router.get("/:id/update",/*validateListing, */ asyncWrap(async(req,res)=>{
+router.get("/:id/update",isLoggedIn,/*validateListing, */ asyncWrap(async(req,res)=>{
  let {id} = req.params;
  let listing = await Listing.findById(id);
  
@@ -80,7 +83,7 @@ res.redirect(`/listings/${id}`);
 
 // delete listing route
 
-router.delete("/:id", asyncWrap(async(req,res)=>{
+router.delete("/:id",isLoggedIn, asyncWrap(async(req,res)=>{
 let {id} = req.params;
 req.flash("delete","Listing Deleted successfully");
 

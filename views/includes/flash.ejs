@@ -13,7 +13,7 @@
     <%}%>
 
 <% if( deleted && deleted.length) {%>
-   <div class="alert alert-primary alert-dismissible fade show col-6 offset-3" role="alert">
+   <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
     <%= deleted %>
 
     <button
@@ -27,8 +27,23 @@
     <%}%>
 
 <% if( updated && updated.length) {%>
-   <div class="alert alert-primary alert-dismissible fade show col-6 offset-3" role="alert">
+   <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
     <%= updated %>
+
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close">
+    </button>
+</div>
+
+    <%}%>
+
+<% if( sinupE && sinupE.length) {%>
+    
+   <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+    <%= sinupE %>
 
     <button
         type="button"

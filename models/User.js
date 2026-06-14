@@ -15,7 +15,7 @@ const userSchema =  new mongoose.Schema({
 });
 
 // it auto add pass , username ,convert.hash , compare pass;
-console.log(passportLocalMongoose);
+
 userSchema.plugin(passportLocalMongoose);
 
 
