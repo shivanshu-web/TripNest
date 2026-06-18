@@ -9,7 +9,7 @@ module.exports.isLoggedIn = (req,res,next)=>{
        return res.redirect("/login");
     }
     
-    next(); 
+    next();  
 }
 
 module.exports.saveUrl = (req,res,next)=>{
