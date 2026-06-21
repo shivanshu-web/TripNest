@@ -7,9 +7,10 @@ const asyncWrap = require("../util/wrapAsyanc.js");
 // for JOi validaiton 
 const { listingSchema } = require("../schema.js");
 const {isLoggedIn}  = require("../middleware.js");
+const {saveUrl} = require("../middleware.js");
 
-// for redirect post Url 
-const saveUrl = require("./middleware.js/saveUrl");
+
+
 
 
 

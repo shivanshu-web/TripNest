@@ -5,6 +5,9 @@ const User = require("../models/User.js");
 const asyncWrap = require("../util/wrapAsyanc.js");
 const passport = require("passport");
 
+// for redirect post url
+const {saveUrl} = require("../middleware.js");
+
 
 
 
@@ -42,6 +45,7 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login",
+    saveUrl,
     passport.authenticate("local",
         {
             failureRedirect: "/login",
@@ -49,8 +53,10 @@ router.post("/login",
         }),
 
     async (req, res) => {
+       
         req.flash("success", "Welcome to Wnaderlust ! you are loged in ");
-        res.redirect("/listings");
+        let redirectUrl = res.locals.redirectUrl || "/listings";
+        res.redirect(redirectUrl);
 
     });
 
