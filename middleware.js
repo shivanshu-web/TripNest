@@ -4,12 +4,13 @@ module.exports.isLoggedIn = (req,res,next)=>{
     
     
     if(!req.isAuthenticated()){
+        console.log(req.originalUrl);
         req.session.redirectUrl = req.orignalUrl;
         req.flash("error" , "you must be loged in to create listing");
        return res.redirect("/login");
     }
     
-    next();   
+    next();    
 }
 
 module.exports.saveUrl = (req,res,next)=>{
