@@ -63,7 +63,12 @@ const listingSchema = new Schema({
       type:mongoose.Schema.Types.ObjectId,
       ref:"review",
     },
-  ]
+    
+  ],
+  owner:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 
 // mongoose middleware while delete any listing then it delete all reviews from that perticular listing;

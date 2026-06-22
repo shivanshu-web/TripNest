@@ -1,3 +1,4 @@
+const listing = require("./models/listing.js");
 
 // this is for user authontication middleware;
 module.exports.isLoggedIn = (req,res,next)=>{
@@ -23,4 +24,13 @@ module.exports.saveUrl = (req,res,next)=>{
         
     }
     next();
+}
+
+module.exports.isowner = async(req,res,next)=>{
+    let {id} = req.params;
+    let listing = await listing.findById(id);
+    if (currUser && currUser._id.equals(listing.owner.id)){
+        
+    }
+
 }
