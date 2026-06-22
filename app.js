@@ -101,16 +101,16 @@ app.use((req,res,next)=>{
 });
 
 
-app.get("/demouser", async (req, res) => {
-    let fakeUser = new User({
-        email: "shica@gmail.com",
-        username: "shiva"
-    });
+// app.get("/demouser", async (req, res) => {
+//     let fakeUser = new User({
+//         email: "shica@gmail.com",
+//         username: "shiva"
+//     });
 
-    let registeredUser = await User.register(fakeUser, "shiva");
+//     let registeredUser = await User.register(fakeUser, "shiva");
 
-    res.send(registeredUser);
-});
+//     res.send(registeredUser);
+// });
 
 
 

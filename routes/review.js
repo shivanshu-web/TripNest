@@ -16,20 +16,12 @@ const Review = require("../models/review.js");
 //When creating the router, enable parameter merging:
 const router = express.Router({ mergeParams: true });
 
+const {validateReview ,isLoggedIn , isReviewOuthor } = require("../middleware.js");
 
 
 
 
 
-// for review middleware to validate on serverside 
-const validateReview = (req,res,next)=>{
-    let {error} = reviewSchema.validate(req.body);
-    if(error){
-        throw new ExpressError(400,error)
-    }else{
-        next()
-    }
-}
 
 
 
@@ -37,30 +29,31 @@ const validateReview = (req,res,next)=>{
 
 // review creat 
 
-router.post("/",validateReview, asyncWrap( async(req,res)=>{
+router.post("/",isLoggedIn,validateReview,  asyncWrap( async(req,res)=>{
     
     let listing = await  Listing.findById(req.params.id);
     
    
     let newReview = new Review(req.body.review);
+    newReview.author = req.user._id;
     listing.reviews.push(newReview);
 
     await newReview.save();
     await listing.save();
-    console.log("review saved ");
+    console.log("review saved " , newReview);
     res.redirect(`/listings/${listing.id}`) ;
 
 }));
 
 // delete Review route 
-router.delete("/:review_id" , asyncWrap(async(req,res)=>{
+router.delete("/:review_id" ,isLoggedIn, isReviewOuthor , asyncWrap(async(req,res)=>{
 
     let {id , review_id} = req.params;
-    console.log(id);
+   
     let result = await Review.findByIdAndDelete(review_id);
-    console.log(result);
+   
     let result1 = await Listing.findByIdAndUpdate(id,{$pull:{reviews:review_id}});
-    console.log(result1);
+   
     res.redirect(`/listings/${id}`);
     console.log("deleted");
 

@@ -29,7 +29,9 @@
         </div>
       
 
-      
+      <% if(currUser && currUser.equals(listing.owner._id)) {%>
+
+
         <div class="row">
             <div class="col-6 offset-2 btn-show">
                 <form method="get" action="http://localhost:8080/listings/<%= listing.id %>/update">
@@ -44,13 +46,19 @@
 
 
         </div>
+        <% }%>
   
 
         <!-- this is a review part .. -->
         
+        
 
 
         <div class="col-6 offset-2">
+            <hr>
+            <% if(currUser){%>
+
+            
             <h4>Leave a review</h4>
             <form class="mb-3 mt-3 needs-validation" action="/listings/<%= listing.id %>/reviews" method="POST"  novalidate  > 
                 <div class="mb-3 mt-3">
@@ -68,7 +76,7 @@
                 </div>
                 <button class="btn btn-outline-dark">Submit</button>
             </form>
-            <hr/>
+       <% }%>
             <p> <b>All Reviews</b></p>
             
 
@@ -77,7 +85,7 @@
                 <% for(review of listing.reviews){%>
                     <div class="card mt-1 col-5 ms-2  mb-2">
                         <div class="card-body ms-2   ">
-                            <h5 class="card-title">shivanshu</h5>
+                            <h5 class="card-title"> @<%= review.author.username %> </h5>
                             <p class="card-text"><%= review.comment %></p>
                             <p class="card-text"><%= review.rating %> Star</p>
                         </div>
