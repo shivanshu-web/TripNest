@@ -8,66 +8,46 @@ const passport = require("passport");
 // for redirect post url
 const {saveUrl} = require("../middleware.js");
 
+const userController  = require("../controllers/users.js");
 
 
+router.get("/logout",userController.logout);
 
-router.get("/sinup", (req, res) => {
-    res.render("./users/sinup.ejs");
-});
-
-router.post("/sinup", asyncWrap(async (req, res) => {
-    try {
-        let { username, password, email } = req.body;
-        const newUser = new User({ username, email });
-        const user = await User.register(newUser, password);
-        req.login(user, (err) => {
-            if (err) {
-                req.flash("error", "Try again");
-                res.redirect("/login");
-            } else {
-                req.flash("success", "you sinup successfully");
-                res.redirect("/listings");
-
-            }
-        });
-
-    } catch (e) {
-        req.flash("error", e.message);
-
-        res.redirect("/sinup");
-    }
-}));
+router.route("/sinup")
+    .get(userController.sinupform )
+    .post( asyncWrap(userController.sinupUser));
 
 
-router.get("/login", (req, res) => {
-    res.render("users/login.ejs")
-
-});
-
-router.post("/login",
+router.route("/login")
+    .get(userController.login )
+    .post(
     saveUrl,
     passport.authenticate("local",
         {
             failureRedirect: "/login",
             failureFlash: true
-        }),
+        }), userController.loginUser
 
-    async (req, res) => {
-       
-        req.flash("success", "Welcome to Wnaderlust ! you are loged in ");
-        let redirectUrl = res.locals.redirectUrl || "/listings";
-        res.redirect(redirectUrl);
+    );
 
-    });
 
-router.get("/logout", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash("success", "you are logged out!");
-        res.redirect("/listings")
 
-    })
-})
+// router.get("/sinup",userController.sinupform );
+
+// router.post("/sinup", asyncWrap(userController.sinupUser));
+
+
+// router.get("/login",userController.login );
+
+// router.post("/login",
+//     saveUrl,
+//     passport.authenticate("local",
+//         {
+//             failureRedirect: "/login",
+//             failureFlash: true
+//         }), userController.loginUser
+
+//     );
+
+
 module.exports = router;
