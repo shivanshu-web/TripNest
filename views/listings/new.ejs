@@ -8,7 +8,7 @@
 
 
                 <h3>Create a new listing</h3>
-                <form method="post" action="/listings" novalidate class="needs-validation">
+                <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
 
                     <div class="mb-3">
                         <label for="tital" class="form-label">Title</label>
@@ -27,10 +27,16 @@
                             <div class="invalid-feedback">Please Enter a short Discription</div>
                     </div>
                     
- 
-                    <div class="mb-3">
+                    <!-- here we remove image link and add image upload system  -->
+                    <!-- <div class="mb-3">
                         <label for="url" class="form-label">Image Link </label>
                         <input class="form-control" name="listing[image]" id="" placeholder="Enter image url">
+                        <div class="valid-feedback">Looks good</div>
+                    </div> -->
+
+                      <div class="mb-3">
+                        <label for="url" class="form-label">Upload Image  </label>
+                        <input type="file" class="form-control" name="listing[image]" id="">
                         <div class="valid-feedback">Looks good</div>
                     </div>
                     

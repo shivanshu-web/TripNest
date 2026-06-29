@@ -11,6 +11,13 @@ const {saveUrl , isowner,validateListing} = require("../middleware.js");
 
 const ListingController = require("../controllers/listings.js");
 
+// for image process 
+const multer  = require('multer')
+// for cloud storage 
+const {storage} = require("../CloudConfig.js")
+const upload = multer({storage })
+
+
 
 
 
@@ -23,8 +30,13 @@ router.get("/new",isLoggedIn,ListingController.new);
 router.get("/:id/update",isLoggedIn,isowner, /*validateListing, */ asyncWrap(ListingController.edit));
 
 router.route("/")
-    .get( asyncWrap(ListingController.index))
-    .post( validateListing, asyncWrap(ListingController.create));
+    .get(  asyncWrap(ListingController.index))
+    .post(  isLoggedIn, validateListing,  upload.single("listing[image]"),
+         asyncWrap(ListingController.create)
+        );
+
+    
+  
 
 
 

@@ -33,9 +33,13 @@ module.exports.show = async(req,res)=>{
 
 // crete route 
 module.exports.create = async(req,res,next)=>{  
-   
+
+    let url = req.file.path;
+    let filename = req.file.filename;
+    
     let newlisting = await new Listing(req.body.listing);
     newlisting.owner = req.user._id;
+    newlisting.image = {url,filename};
     await newlisting.save();
     req.flash("success","New listing created");
 

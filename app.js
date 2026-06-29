@@ -1,3 +1,9 @@
+if(process.env.NODE_ENV != "production"){
+require('dotenv').config()
+}
+
+
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -63,7 +69,11 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 
 app.get("/",(req,res) =>{
-    res.send("root");
+    
+    console.log(process.env.CLOUD_NAME);
+console.log(process.env.CLOUD_API_KEY);
+console.log(process.env.CLOUD_API_SECRET);
+res.send("root");
 });
 
 const sessionOption = {
